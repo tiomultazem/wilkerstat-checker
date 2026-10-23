@@ -1,0 +1,95 @@
+# =============================================================================
+# WILKERSTAT-CHECKER .GITIGNORE (PRODUCTION)
+# =============================================================================
+
+# 1. Byte-compiled / Optimized Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# 2. Virtual Environments
+venv/
+env/
+.venv/
+ENV/
+
+# 3. Environment Variables & Secrets (JANGAN PERNAH COMMIT)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# 4. Database, Uploads, dan File Runtime
+data/*
+!data/.gitkeep
+uploads/*
+!uploads/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+*.log
+logging.txt
+*.tmp
+*.bak
+.ipynb_checkpoints/
+01-move offside dots/01 - data/
+01-move offside dots/03 - final/
+
+# 5. Data Geospasial & Model QGIS (Gunakan penyimpanan lokal, bukan Git)
+*.geojson
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.zip
+*.model3
+*.qgs~
+*.qgz~
+
+# 6. Gambar Hasil Render Sementara (Kecualikan aset statis web)
+*.png
+!static/*.png
+!static/**/*.png
+!assets/*.png
+!assets/**/*.png
+
+# 7. Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 8. Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# 9. IDE & Code Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 10. Packaging & Distribution
+dist/
+build/
+*.egg-info/
+
+# 11. Direktori Eksternal / Non-Modul
+Pengolahan-Wilkerstat-SE2026-main/
+artifacts/
+jupyter.bat
+organize.bat
+scripts/organize.bat
+
+# 12. Lain-lain
+*.bak
+*.pdf
+*.qml
+*.qmd
+jumlahfile.txt
