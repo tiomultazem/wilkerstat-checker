@@ -1,0 +1,11 @@
+flask>=3.0
+waitress>=3.0
+geopandas>=1.0
+shapely>=2.0
+pyogrio>=0.9
+pyproj>=3.6
+pandas>=2.2
+openpyxl>=3.1
+fiona>=1.9
+pystray>=0.19
+Pillow>=10.0
