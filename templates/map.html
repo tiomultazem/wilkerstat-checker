@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Peta — wilkerstat checker{% endblock %}
+
+{% block content %}
+<div class="map-page">
+    <div class="map-controls">
+        <div class="filter-group">
+            <h3>Filter Tampil</h3>
+            <div class="filter-row">
+                <label>Kecamatan</label>
+                <select id="filterKec" multiple class="multi-select"></select>
+            </div>
+            <div class="filter-row">
+                <label>Desa</label>
+                <select id="filterDesa" multiple class="multi-select"></select>
+            </div>
+            <div class="filter-row">
+                <label>SLS</label>
+                <select id="filterSLS" multiple class="multi-select"></select>
+            </div>
+            <button id="btnApplyFilter" class="btn btn-sm">Terapkan Filter</button>
+            <button id="btnClearFilter" class="btn btn-sm btn-outline">Reset</button>
+        </div>
+
+        <div class="filter-group">
+            <h3>Warna Berdasarkan</h3>
+            <div class="radio-group">
+                <label><input type="radio" name="colourBy" value="kec"> Kecamatan</label>
+                <label><input type="radio" name="colourBy" value="desa"> Desa</label>
+                <label><input type="radio" name="colourBy" value="sls"> SLS</label>
+                <label><input type="radio" name="colourBy" value="petugas" checked> Petugas</label>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <h3>Layer</h3>
+            <label><input type="checkbox" id="layerMultipart"> Multipart</label>
+            <label><input type="checkbox" id="layerGap"> Gap</label>
+            <label><input type="checkbox" id="layerOverlap"> Overlap</label>
+            <label><input type="checkbox" id="layerDots"> Titik</label>
+        </div>
+
+        <button id="btnFitData" class="btn btn-sm btn-accent">📍 Fit ke Data</button>
+    </div>
+
+    <div id="mainMap" class="map-container"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='map.js') }}"></script>
+{% endblock %}
