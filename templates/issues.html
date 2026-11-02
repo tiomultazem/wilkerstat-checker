@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Masalah — wilkerstat checker{% endblock %}
+{% block content %}
+<h1>⚠️ Detail Masalah</h1>
+
+<div class="issues-toolbar">
+    <div class="filter-inline">
+        <select id="filterType" class="select-sm">
+            <option value="">Semua Jenis</option>
+            <option value="multipart">Multipart</option>
+            <option value="gap">Gap</option>
+            <option value="overlap">Overlap</option>
+            <option value="null_col">Sel Kosong</option>
+            <option value="invalid_geom">Geometri Invalid</option>
+            <option value="duplicate">Duplikat</option>
+            <option value="dot_offside">Titik Offside</option>
+            <option value="dot_flag_mismatch">Flag Mismatch</option>
+        </select>
+        <select id="filterPetugas" class="select-sm">
+            <option value="">Semua Petugas</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="Cari idsubsls / assignment_id..." class="input-sm">
+        <button id="btnReset" class="btn btn-sm btn-outline">Reset</button>
+    </div>
+    <div class="export-buttons">
+        <button class="btn btn-sm btn-primary" onclick="exportIssues('shape_geojson')">⬇ Poligon SLS GeoJSON</button>
+        <button class="btn btn-sm btn-primary" onclick="exportIssues('dot_geojson')">⬇ Titik GeoJSON</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('multipart')">⬇ Multipart XLSX</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('gap')">⬇ Gap XLSX</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('overlap')">⬇ Overlap XLSX</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('gap_geojson')">⬇ Gap GeoJSON</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('overlap_geojson')">⬇ Overlap GeoJSON</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('dot_offside')">⬇ Offside XLSX</button>
+        <button class="btn btn-sm btn-accent" onclick="exportIssues('dot_flag_repair')">⬇ Flag Repair XLSX</button>
+    </div>
+</div>
+
+<div id="issuesLoading" class="loading-msg">Memuat data...</div>
+<div id="issueCount" class="issue-count"></div>
+<div id="issuesTable" class="table-wrap"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='issues.js') }}"></script>
+{% endblock %}
+
