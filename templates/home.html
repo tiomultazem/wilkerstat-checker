@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}Monitoring Progres — wilkerstat checker{% endblock %}
+
+{% block content %}
+<div class="gis-layout">
+    <!-- Top Progress Strip -->
+    <div class="gis-topbar">
+        <div class="gis-topbar-content">
+            <div id="topSummary" class="topbar-summary">
+                <!-- Diisi dinamis oleh JS: 843 Terupload / 1.106 Target (76%) -->
+            </div>
+            <div class="topbar-track">
+                <div id="topProgressBar" class="topbar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map & Floating Overlays Workspace -->
+    <div class="gis-workspace">
+        <!-- Fullscreen Map -->
+        <div id="mainMap" class="gis-map"></div>
+
+        <!-- Floating Sidebar (Kanan) -->
+        <div class="gis-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-header-top">
+                    <div class="sidebar-title">
+                        <span class="icon">📊</span>
+                        <span>Monitoring Progres</span>
+                    </div>
+                    <button id="btnFitData" class="map-icon-btn-compact" title="Center ke Seluruh Data" aria-label="Center ke Data">
+                        ⌖
+                    </button>
+                </div>
+                <!-- Layer Switcher: Poligon / Titik -->
+                <div class="tab-bar-pill" id="mainTabs">
+                    <button class="tab-pill active" data-tab="poligon">Poligon</button>
+                    <button class="tab-pill" data-tab="titik">Titik</button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Poligon -->
+            <div id="tab-poligon" class="tab-content active">
+                <div class="mode-bar-compact" id="modePoly">
+                    <button class="mode-btn active" data-mode="progress">Upload</button>
+                    <button class="mode-btn" data-mode="multipart">Multipart</button>
+                    <button class="mode-btn" data-mode="gap">Gap</button>
+                    <button class="mode-btn" data-mode="overlap">Overlap</button>
+                    <button class="mode-btn" data-mode="duplicate">Duplikat</button>
+                </div>
+                <div class="sidebar-scrollable">
+                    <div class="progress-bars-compact" id="polyBars"></div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Titik -->
+            <div id="tab-titik" class="tab-content">
+                <div class="mode-bar-compact" id="modeDot">
+                    <button class="mode-btn active" data-mode="progress">Status</button>
+                    <button class="mode-btn" data-mode="offside">Offside</button>
+                    <button class="mode-btn" data-mode="moved">Digeser</button>
+                </div>
+                <div class="sidebar-scrollable">
+                    <div class="progress-bars-compact" id="dotBars"></div>
+                </div>
+            </div>
+
+            <!-- Filter & Layer Tools (Collapsible / Bottom of sidebar) -->
+            <div class="sidebar-filters">
+                <details class="filter-accordion">
+                    <summary>⚙️ Filter Wilayah & Pewarnaan</summary>
+                    <div class="filter-panel-body">
+                        <!-- Filter Tampil -->
+                        <div class="filter-row">
+                            <label>Kecamatan</label>
+                            <div class="dropdown-check" id="ddKec">
+                                <div class="dd-trigger" onclick="toggleDropdown('ddKec')">Pilih kecamatan… <span class="dd-arrow">▾</span></div>
+                                <div class="dd-panel" id="ddKecPanel"></div>
+                            </div>
+                        </div>
+                        <div class="filter-row">
+                            <label>Desa</label>
+                            <div class="dropdown-check" id="ddDesa">
+                                <div class="dd-trigger" onclick="toggleDropdown('ddDesa')">Pilih desa… <span class="dd-arrow">▾</span></div>
+                                <div class="dd-panel" id="ddDesaPanel"></div>
+                            </div>
+                        </div>
+                        <div class="filter-row">
+                            <label>SLS</label>
+                            <div class="dropdown-check" id="ddSLS">
+                                <div class="dd-trigger" onclick="toggleDropdown('ddSLS')">Pilih SLS… <span class="dd-arrow">▾</span></div>
+                                <div class="dd-panel" id="ddSLSPanel"></div>
+                            </div>
+                        </div>
+                        <div class="btn-row">
+                            <button id="btnApplyFilter" class="btn btn-sm btn-accent">Terapkan</button>
+                            <button id="btnClearFilter" class="btn btn-sm btn-outline">Reset</button>
+                        </div>
+
+                        <!-- Pewarnaan Poligon -->
+                        <div class="filter-row" style="margin-top:10px;">
+                            <label style="font-weight:600;">Warna Poligon:</label>
+                            <div class="radio-group-compact">
+                                <label><input type="radio" name="colourBy" value="petugas" checked> Petugas</label>
+                                <label><input type="radio" name="colourBy" value="kec"> Kecamatan</label>
+                                <label><input type="radio" name="colourBy" value="desa"> Desa</label>
+                                <label><input type="radio" name="colourBy" value="sls"> SLS</label>
+                            </div>
+                        </div>
+
+                        <!-- Layer Issue Toggles -->
+                        <div class="filter-row" style="margin-top:8px;">
+                            <label style="font-weight:600;">Layer Tambahan:</label>
+                            <div class="checkbox-group-compact">
+                                <label><input type="checkbox" id="layerMultipart"> Multipart</label>
+                                <label><input type="checkbox" id="layerGap"> Gap</label>
+                                <label><input type="checkbox" id="layerOverlap"> Overlap</label>
+                                <label><input type="checkbox" id="layerDuplicate"> Duplikat</label>
+                                <label><input type="checkbox" id="layerDots" checked> Titik</label>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                {% if dev %}
+                <!-- Maintenance / Admin Recheck Accordion -->
+                <details class="filter-accordion" style="border-top:1px solid #f1f5f9;">
+                    <summary>🛠️ Pemeliharaan &amp; Sinkronisasi</summary>
+                    <div class="filter-panel-body" style="display:flex;flex-direction:column;gap:8px;">
+                        <button id="btnRecheckTopology" class="btn btn-sm btn-outline" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;">
+                            <span>🔄</span> Recheck Topologi (QGIS)
+                        </button>
+                        <button id="btnRecheckDots" class="btn btn-sm btn-outline" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;">
+                            <span>📍</span> Recheck Posisi Titik
+                        </button>
+                    </div>
+                </details>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='home.js') }}"></script>
+{% endblock %}
