@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Upload — wilkerstat checker{% endblock %}
+
+{% block content %}
+<h1>📤 Upload File</h1>
+
+<div class="upload-grid">
+    {% if dev %}
+    <!-- Master Shape -->
+    <div class="upload-card">
+        <h3>Master Poligon</h3>
+        <p>CSV/XLSX/GeoJSON berisi daftar idsubsls dan petugas sebagai target progres.</p>
+        <form id="formMasterShape" class="upload-form" data-type="master_shape">
+            <div class="drop-zone">
+                <input type="file" name="file" accept=".csv,.xlsx,.xls,.geojson,.json" required>
+                <div class="drop-zone-content">
+                    <span class="drop-zone-icon">🗺️</span>
+                    <span class="drop-zone-text">Tarik file ke sini atau <span class="drop-zone-link">cari file</span></span>
+                    <span class="drop-zone-filename" style="display:none;"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Master Poligon</button>
+        </form>
+        <div class="upload-status" id="statusMasterShape"></div>
+    </div>
+    {% endif %}
+
+    <!-- Master Dot -->
+    <div class="upload-card">
+        <h3>Titik Bangunan (GeoJSON / GPKG)</h3>
+        <p>File GeoJSON atau GPKG titik bangunan SE2026. Upload pertama = kondisi awal. Upload ulang = update/replace per assignment_id. Sistem otomatis cek koordinat vs poligon induk.</p>
+        <form id="formMasterDot" class="upload-form" data-type="master_dot">
+            <div class="drop-zone">
+                <input type="file" name="file" accept=".geojson,.json,.gpkg" required>
+                <div class="drop-zone-content">
+                    <span class="drop-zone-icon">📍</span>
+                    <span class="drop-zone-text">Tarik file ke sini atau <span class="drop-zone-link">cari file</span></span>
+                    <span class="drop-zone-filename" style="display:none;"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Titik</button>
+        </form>
+        <div class="upload-status" id="statusMasterDot"></div>
+    </div>
+
+    <!-- Shape -->
+    <div class="upload-card">
+        <h3>Shape (GeoJSON)</h3>
+        <p>File GeoJSON berisi poligon SLS/Sub-SLS. Akan divalidasi multipart, overlap, gap, dan kelengkapan kolom.</p>
+        <form id="formShape" class="upload-form" data-type="shape">
+            <div class="drop-zone">
+                <input type="file" name="file" accept=".geojson,.json" required>
+                <div class="drop-zone-content">
+                    <span class="drop-zone-icon">📐</span>
+                    <span class="drop-zone-text">Tarik file ke sini atau <span class="drop-zone-link">cari file</span></span>
+                    <span class="drop-zone-filename" style="display:none;"></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Shape</button>
+        </form>
+        <div class="upload-status" id="statusShape"></div>
+    </div>
+</div>
+
+<!-- Upload result detail -->
+<div id="uploadResult" class="upload-result" style="display:none;">
+    <h2>Hasil Upload</h2>
+    <div id="uploadResultContent"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='upload.js') }}"></script>
+{% endblock %}
