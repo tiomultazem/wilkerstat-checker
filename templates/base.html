@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}wilkerstat checker{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/maplibre-gl.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body data-server-tz="{{ server_tz }}">
+    <nav class="navbar">
+        <div class="nav-left">
+            <div id="globalWorkerBadge" class="global-worker-badge" style="display:none;">
+                <span class="spinner-icon">⏳</span>
+                <span id="globalWorkerText">Memproses file...</span>
+            </div>
+        </div>
+        <div class="nav-title-center">
+            <h1 class="nav-title-h1">
+                <a href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo"> WilkerStat Checker</a>
+            </h1>
+            <span class="nav-watermark">2026 made with ❤️, Gilang Wahyu Prasetyo &copy; BPS Kabupaten Tabalong</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+            <a href="/upload" class="{% if request.endpoint == 'upload_page' %}active{% endif %}">Upload</a>
+            <a href="/issues" class="{% if request.endpoint == 'issues_page' %}active{% endif %}">Masalah</a>
+            <a href="/history" class="{% if request.endpoint == 'history_page' %}active{% endif %}">Riwayat</a>
+        </div>
+    </nav>
+
+    <main class="{% if request.endpoint == 'home' %}gis-main{% else %}container{% endif %}">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if request.endpoint != 'home' %}
+    <footer class="footer">
+        <p>2026 made with ❤️, Gilang Wahyu Prasetyo &copy; BPS Kabupaten Tabalong</p>
+    </footer>
+    {% endif %}
+
+    <div id="globalToastContainer" class="global-toast-container"></div>
+
+    <script src="{{ url_for('static', filename='vendor/maplibre-gl.js') }}"></script>
+    <script src="{{ url_for('static', filename='global_worker.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
