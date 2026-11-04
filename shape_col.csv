@@ -1,0 +1,35 @@
+col,type,
+kk,string,
+gid,integer,not null
+ikn,integer,
+bstt,string,
+luas,float,
+bsbtt,string,
+idsls,string,
+kdprov,string,not null
+kdkab,string,not null
+kdkec,string,not null
+kddesa,string,not null
+kdsls,string,not null
+nmprov,string,not null
+nmkab,string,not null
+nmkec,string,not null
+nmdesa,string,not null
+nmsls,string,not null
+bstt_k,string,
+khusus,string,
+muatan,string,
+posisi,string,
+rw_dki,string,
+segmen,string,
+sumber,string,
+dom_sls,string,
+periode,string,
+tingkat,string,
+idsubsls,string,
+kdsubsls,string,
+nm_gedung,string,
+wil_campur,string,
+SSN26,integer,
+inset,string,
+petugas,string,not null
