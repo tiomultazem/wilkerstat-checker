@@ -1,0 +1,23 @@
+Nama Atribut,Tipe Data,Penjelasan
+assignment_id,Text (string),Kode unik tagging per-keluarga
+flag_repair,Integer (32 bit),"Kode yang menunjukkan posisi titik bangunan apakah berada dalam batas SLS/SubSLS atau tidak [0 = Ya, 1 = Tidak]"
+flag_position,Integer (32 bit),"Kode yang menunjukkan posisi titik bangunan apakah dilakukan editing penggeseran posisi atau tidak [0 = Tidak, 1 = Ya]"
+idsubsls_origin,Text (string),"Idsubsls dimana titik bangunan seharusnya berada sesuai hasil kegiatan lapangan SE2026 (master 2025 Semester 2)"
+idsubsls_edited,Text (string),Idsubsls yang menempel pada peta SLS/Sub-SLS yang digunakan dalam kegiatan lapangan SE2026
+latitude_origin,Decimal (double),Posisi latitude titik sebelum dilakukan editing atau penggeseran.
+longitude_origin,Decimal (double),Posisi longitude titik sebelum dilakukan editing atau penggeseran.
+latitude_edited,Decimal (double),Posisi latitude titik setelah dilakukan editing atau penggeseran.
+longitude_edited,Decimal (double),Posisi longitude titik setelah dilakukan editing atau penggeseran.
+no_bang,Integer (32 bit),Nomor bangunan unik per SLS/Sub-SLS
+kode_bang_value,Integer (32 bit),"Kode yang menyatakan jenis bangunan [1 = bangunan usaha, 2 = bangunan tempat tinggal, 3 = bangunan campuran, dstt]"
+kdprov,Text (string),Kode provinsi
+nmprov,Text (string),Nama provinsi
+kdkab,Text (string),Kode kabupaten/kota
+nmkab,Text (string),Nama kabupaten/kota
+kdkec,Text (string),Kode kecamatan
+nmkec,Text (string),Nama kecamatan
+kddesa,Text (string),Kode desa
+nmdesa,Text (string),Nama desa
+idsls,Text (string),Idsls sesuai peta yang digunakan dalam lapangan SE2026
+nmsls,Text (string),Nama sls sesuai peta yang digunakan dalam lapangan SE2026
+sls,Text (string),Nama sls sesuai dengan yang tercantum pada atribut titik bangunan
